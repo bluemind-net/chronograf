@@ -23,7 +23,6 @@ import {
   PagerDutyConfig,
   PushoverConfig,
   SensuConfig,
-  SlackConfig,
   SMTPConfig,
   TalkConfig,
   TelegramConfig,
@@ -42,6 +41,7 @@ import DeprecationWarning from 'src/admin/components/DeprecationWarning'
 import {ErrorHandling} from 'src/shared/decorators/errors'
 
 import {Source, Kapacitor} from 'src/types'
+import SlackConfigs from 'src/kapacitor/components/config/SlackConfigs'
 
 interface Service {
   link: Link
@@ -298,7 +298,8 @@ class AlertTabs extends PureComponent<Props, State> {
         type: 'Slack',
         enabled: this.getEnabled(configSections, 'slack'),
         renderComponent: () => (
-          <SlackConfig
+          <SlackConfigs
+            slackConfigs={[this.getSection(configSections, 'slack')]}
             onSave={this.handleSaveConfig('slack')}
             config={this.getSection(configSections, 'slack')}
             onTest={this.handleTestConfig('slack')}
@@ -306,6 +307,18 @@ class AlertTabs extends PureComponent<Props, State> {
           />
         ),
       },
+      // slack: {
+      //   type: 'Slack',
+      //   enabled: this.getEnabled(configSections, 'slack'),
+      //   renderComponent: () => (
+      //     <SlackConfig
+      //       onSave={this.handleSaveConfig('slack')}
+      //       config={this.getSection(configSections, 'slack')}
+      //       onTest={this.handleTestConfig('slack')}
+      //       enabled={this.getEnabled(configSections, 'slack')}
+      //     />
+      //   ),
+      // },
       smtp: {
         type: 'SMTP',
         enabled: this.getEnabled(configSections, 'smtp'),
