@@ -12,6 +12,7 @@ import {
 import {
   getKapacitorConfig,
   updateKapacitorConfigSection,
+  addKapacitorConfigInSection,
   testAlertOutput,
   getAllServices,
 } from 'src/shared/apis'
@@ -204,7 +205,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <AlertaConfig
             onSave={this.handleSaveConfig('alerta')}
-            config={this.getSection(configSections, 'alerta')}
+            config={this.getSectionElement(configSections, 'alerta')}
             onTest={this.handleTestConfig('alerta')}
             enabled={this.getEnabled(configSections, 'alerta')}
           />
@@ -216,7 +217,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <HipChatConfig
             onSave={this.handleSaveConfig('hipchat')}
-            config={this.getSection(configSections, 'hipchat')}
+            config={this.getSectionElement(configSections, 'hipchat')}
             onTest={this.handleTestConfig('hipchat')}
             enabled={this.getEnabled(configSections, 'hipchat')}
           />
@@ -228,7 +229,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <OpsGenieConfig
             onSave={this.handleSaveConfig('opsgenie')}
-            config={this.getSection(configSections, 'opsgenie')}
+            config={this.getSectionElement(configSections, 'opsgenie')}
             onTest={this.handleTestConfig('opsgenie')}
             enabled={this.getEnabled(configSections, 'opsgenie')}
           />
@@ -240,7 +241,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <OpsGenieConfig
             onSave={this.handleSaveConfig('opsgenie2')}
-            config={this.getSection(configSections, 'opsgenie2')}
+            config={this.getSectionElement(configSections, 'opsgenie2')}
             onTest={this.handleTestConfig('opsgenie2')}
             enabled={this.getEnabled(configSections, 'opsgenie2')}
           />
@@ -252,7 +253,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <PagerDutyConfig
             onSave={this.handleSaveConfig('pagerduty')}
-            config={this.getSection(configSections, 'pagerduty')}
+            config={this.getSectionElement(configSections, 'pagerduty')}
             onTest={this.handleTestConfig('pagerduty')}
             enabled={this.getEnabled(configSections, 'pagerduty')}
           />
@@ -264,7 +265,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <PagerDutyConfig
             onSave={this.handleSaveConfig('pagerduty2')}
-            config={this.getSection(configSections, 'pagerduty2')}
+            config={this.getSectionElement(configSections, 'pagerduty2')}
             onTest={this.handleTestConfig('pagerduty2')}
             enabled={this.getEnabled(configSections, 'pagerduty2')}
           />
@@ -276,7 +277,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <PushoverConfig
             onSave={this.handleSaveConfig('pushover')}
-            config={this.getSection(configSections, 'pushover')}
+            config={this.getSectionElement(configSections, 'pushover')}
             onTest={this.handleTestConfig('pushover')}
             enabled={this.getEnabled(configSections, 'pushover')}
           />
@@ -288,7 +289,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <SensuConfig
             onSave={this.handleSaveConfig('sensu')}
-            config={this.getSection(configSections, 'sensu')}
+            config={this.getSectionElement(configSections, 'sensu')}
             onTest={this.handleTestConfig('sensu')}
             enabled={this.getEnabled(configSections, 'sensu')}
           />
@@ -299,9 +300,9 @@ class AlertTabs extends PureComponent<Props, State> {
         enabled: this.getEnabled(configSections, 'slack'),
         renderComponent: () => (
           <SlackConfigs
-            slackConfigs={[this.getSection(configSections, 'slack')]}
+            slackConfigs={this.getSectionElements(configSections, 'slack')}
             onSave={this.handleSaveConfig('slack')}
-            config={this.getSection(configSections, 'slack')}
+            config={this.getSectionElement(configSections, 'slack')}
             onTest={this.handleTestConfig('slack')}
             enabled={this.getEnabled(configSections, 'slack')}
           />
@@ -313,7 +314,7 @@ class AlertTabs extends PureComponent<Props, State> {
       //   renderComponent: () => (
       //     <SlackConfig
       //       onSave={this.handleSaveConfig('slack')}
-      //       config={this.getSection(configSections, 'slack')}
+      //       config={this.getSectionElement(configSections, 'slack')}
       //       onTest={this.handleTestConfig('slack')}
       //       enabled={this.getEnabled(configSections, 'slack')}
       //     />
@@ -325,7 +326,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <SMTPConfig
             onSave={this.handleSaveConfig('smtp')}
-            config={this.getSection(configSections, 'smtp')}
+            config={this.getSectionElement(configSections, 'smtp')}
             onTest={this.handleTestConfig('smtp')}
             enabled={this.getEnabled(configSections, 'smtp')}
           />
@@ -337,7 +338,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <TalkConfig
             onSave={this.handleSaveConfig('talk')}
-            config={this.getSection(configSections, 'talk')}
+            config={this.getSectionElement(configSections, 'talk')}
             onTest={this.handleTestConfig('talk')}
             enabled={this.getEnabled(configSections, 'talk')}
           />
@@ -349,7 +350,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <TelegramConfig
             onSave={this.handleSaveConfig('telegram')}
-            config={this.getSection(configSections, 'telegram')}
+            config={this.getSectionElement(configSections, 'telegram')}
             onTest={this.handleTestConfig('telegram')}
             enabled={this.getEnabled(configSections, 'telegram')}
           />
@@ -361,7 +362,7 @@ class AlertTabs extends PureComponent<Props, State> {
         renderComponent: () => (
           <VictorOpsConfig
             onSave={this.handleSaveConfig('victorops')}
-            config={this.getSection(configSections, 'victorops')}
+            config={this.getSectionElement(configSections, 'victorops')}
             onTest={this.handleTestConfig('victorops')}
             enabled={this.getEnabled(configSections, 'victorops')}
           />
@@ -435,8 +436,19 @@ class AlertTabs extends PureComponent<Props, State> {
     }
   }
 
-  private getSection = (sections: Sections, section: string): Element => {
-    return _.get(sections, [section, 'elements', '0'], null)
+  private getSectionElement = (
+    sections: Sections,
+    section: string,
+    elementIndex: number = 0
+  ): Element => {
+    return _.get(sections, [section, 'elements', elementIndex], null)
+  }
+
+  private getSectionElements = (
+    sections: Sections,
+    section: string
+  ): Element[] => {
+    return _.get(sections, [section, 'elements'], null)
   }
 
   private getEnabled = (sections: Sections, section: string): boolean => {
@@ -489,7 +501,10 @@ class AlertTabs extends PureComponent<Props, State> {
 
   private sanitizeProperties = (section: string, properties: Props): Props => {
     const cleanProps = {...properties, enabled: true}
-    const {redacted} = this.getSection(this.state.configSections, section)
+    const {redacted} = this.getSectionElement(
+      this.state.configSections,
+      section
+    )
     if (redacted && redacted.length) {
       redacted.forEach(badProp => {
         if (properties[badProp] === 'true') {
