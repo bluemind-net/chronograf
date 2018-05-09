@@ -1,5 +1,6 @@
 import {QueryConfig} from 'src/types'
 import {ColorString} from 'src/types/colors'
+import {KapacitorQueryConfigActions} from 'src/types/actions'
 
 interface Axis {
   bounds: [string, string]
@@ -77,20 +78,14 @@ export interface Template {
   values: TemplateValue[]
 }
 
-export type CellEditorOverlayActionsFunc = (id: string, ...args: any[]) => any
-
-export interface CellEditorOverlayActions {
-  chooseNamespace: (id: string) => void
-  chooseMeasurement: (id: string) => void
-  applyFuncsToField: (id: string) => void
-  chooseTag: (id: string) => void
-  groupByTag: (id: string) => void
-  toggleField: (id: string) => void
-  groupByTime: (id: string) => void
-  toggleTagAcceptance: (id: string) => void
-  fill: (id: string) => void
+export type CellEditorOverlayActions = KapacitorQueryConfigActions & {
   editRawTextAsync: (url: string, id: string, text: string) => Promise<void>
-  addInitialField: (id: string) => void
-  removeFuncs: (id: string) => void
-  timeShift: (id: string) => void
+  fill?: (id: string) => void
+  addInitialField?: (id: string) => void
+  timeShift?: (id: string) => void
 }
+
+export type CellEditorOverlayActionsFunc = (
+  query: QueryConfig,
+  ...args: any[]
+) => any
